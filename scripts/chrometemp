@@ -1,0 +1,12 @@
+#!/bin/bash
+args=$@
+if [ "$args" == "--clean" ]; then
+	rm -R /tmp/chrometmp*
+else
+	if [ -z "$path"]; then
+		n=$(expr $(dir /tmp | awk '/chrometmp/' | wc -l) + 1)
+	else
+		n=$args
+	fi
+	google-chrome --user-data-dir=/tmp/chrometmp
+fi

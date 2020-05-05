@@ -1,0 +1,5 @@
+#!/bin/bash
+useof_ram() {
+        echo $(free -m | awk '/Mem/ {print "scale=2\;",$3,"/",$2}' 2>/dev/null) | bc | tr -d . | echo $(tee)\%
+}
+useof_$@

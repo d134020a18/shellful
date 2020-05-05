@@ -1,0 +1,18 @@
+#!/bin/bash
+cd=$(realpath "$1")
+cd "$cd"
+if ! dh_make --indep --createorig; then
+	echo error; #kill -9 $$;
+fi
+cd debian
+nano control
+#grep -v makefile rules > rules.new
+#mv rules.new rules
+nano install
+echo "$(echo $cd | cut -d'-' -f2)" > source/format
+echo Modify the files in debian/ and press enter
+read
+#rm *.ex
+if ! [ -z "$2" ]; then key="-k$2"; fi
+cd ..
+debuild -us -uc $key

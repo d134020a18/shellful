@@ -1,0 +1,18 @@
+#!/bin/bash
+if ! [ -z "$@" ]; then
+	if [ "$@" == -h ] || [ "$@" == "--help" ]; then echo Usage: nsmap \[Subnet mask\]; exit; fi
+else
+	a=0
+fi
+if [ -z "$a" ]; then ip=$(echo $1); else ip=$(gesynfo ip); fi
+sub=$(echo $ip | cut -d'.' -f '1,2,3')
+if [ -z "$sub" ]; then
+	echo No ip adresses found
+	exit
+fi
+for i in {0..255}; do
+	echo -n $sub.$i\ > /tmp/ns
+	if nslookup $sub.$i >> /tmp/ns; then
+		cat /tmp/ns | awk '{$2=""; print $0}'
+	fi;
+done

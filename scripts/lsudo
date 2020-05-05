@@ -1,0 +1,2 @@
+#!/bin/bash
+echo XAUTHORITY=/var/lib/lightdm/.Xauthority DISPLAY=:0.0 sudo sh -c \'$@\' | sh

@@ -1,0 +1,28 @@
+#!/bin/bash
+#Caution! Beta
+if [ -z $@ ] || ! [ $@ == --folder ]; then
+	ls -lp |
+	grep -v / |
+	awk '/ 0 /' |
+	awk '{print $9}' |
+	while read f; do
+		rm "$f";
+		echo "$f" deleted!
+	done
+else
+	if ! [ -z $2 ]; then
+		dir="$2";
+	else
+		dir="$PWD"
+	fi
+for fls in "$dir"/*; do
+		echo "$fls";
+	done |
+	while read d; do
+		ls "$d" > /tmp/demf;
+		if ! [ -s /tmp/demf ];then
+			rmdir $d;
+			echo "$d" deleted!
+		fi;
+	done;
+fi

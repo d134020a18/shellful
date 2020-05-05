@@ -1,0 +1,14 @@
+#!/bin/bash
+export DISPLAY=:0
+for (( ; ; )); do
+	read -rn1 x
+	if [ -z "$x" ]; then
+		xdotool key Return
+	else
+		if [ "$x" == $'\177' ]; then
+			xdotool key BackSpace
+		else
+			xdotool type $x
+		fi
+	fi
+done

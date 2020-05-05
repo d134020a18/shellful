@@ -1,0 +1,4 @@
+#!/bin/bash
+dt="$(date +"%d-%m-%y_%R:%S")"
+maim ~/screenshots/$dt.png
+

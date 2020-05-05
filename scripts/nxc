@@ -1,0 +1,19 @@
+#!/bin/bash
+if ! [[ -z "$1" || "$1" == "-h" || "$1" == "--help" ]]; then
+	if [[ "$1" == "-s" || "$1" == "--set" ]]; then
+		note=$(xclip -o)
+		name=`yad --entry --text="Name:"`
+		if [ ! -z $name ]; then
+			echo $note\#$name >> ~/.notes.db
+		else
+		exit 130
+		fi
+	fi
+	if [[ "$1" == "-r" || "$1" == "--read" ]]; then
+		a=$(yad --entry --text="Note:")
+		cat ~/.notes.db | grep "\#$a" | sed -e "s/#$a//" | xclip -sel clip -r
+	fi
+else
+	echo Usage: nxc \{--set \| --read\}
+fi
+

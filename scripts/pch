@@ -1,0 +1,2 @@
+#!/bin/bash
+ps --forest -o pid -g $@ | awk 'NR != 1'

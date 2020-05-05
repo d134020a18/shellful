@@ -1,0 +1,49 @@
+#!/bin/bash
+rm /tmp/tosy.args 2> /dev/null
+if [ -z "$1" ] || [ "$1" == "-r" ]; then
+        if ! [ "$1" == "-r" ]; then
+                ls -la | grep "\->" | awk '{print $9,$11}' |
+                while read s d; do
+                        rm "$s";
+                        echo "$d" > "$s.sy";
+			echo Created "$s.sy"
+                done;
+        else
+		cd "$3"
+                ls -la *.sy |
+                awk '{print $9}' |
+                while read a; do
+                        na=$(echo "$a" | awk '{print substr($0,1,length-3)}')
+                        c=$(cat "$a")
+                        rm "$a"
+                        ln -s "$c" "$na";
+			echo Created link "$na"
+                done;
+        fi;
+else
+	if ! [ "$1" == "-r" ] || [ "$2" == "-r" ]; then
+                for n in $(seq 1 $#); do
+                        arg=${!n}
+                        [ $arg == --all ] || [ $arg == -r ] || ls -la $arg | grep "\->" | awk '{print $9,$11}' >> /tmp/tosy.args
+                done
+                cat /tmp/tosy.args |
+                while read s d; do
+                        rm "$s";
+                        echo "$d" > "$s.sy";
+			echo Created "$s.sy"
+                done
+        else
+                for n in $(seq 1 $#); do
+                        arg=${!n}
+                        [ $arg == --all ] || [ $arg == -r ] || printf $arg | awk '{print substr($0,1,length-3)}' >> /tmp/tosy.args
+                done
+                cat /tmp/tosy.args |
+                while read a; do
+                        c=$(echo "$a" | awk '{print substr($0,1,length-3)}')
+                        j=$(readlink -f $a)
+                        rm "$a"
+                        ln -s "$j" "$c";
+			echo Created link "$c"
+                done;
+        fi
+fi

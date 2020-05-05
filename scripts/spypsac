@@ -1,0 +1,5 @@
+#!/bin/bash
+gesynfo sshsessions | awk '{print $2}' |
+while read pid; do
+	xterm -e "spypsa $pid" &
+done

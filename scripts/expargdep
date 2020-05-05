@@ -1,0 +1,10 @@
+#!/bin/bash
+#Librarie of exparg
+echo -n spawn \"$1\"\;\ 
+for i in $(seq 2 $#);do
+	if ! (( $i % 2 ));then
+		echo -n expect \""${!i}"\"
+	else
+		echo -n \; send \""${!i}"\\n\;\ 
+	fi
+done

@@ -1,0 +1,3 @@
+#!/bin/bash
+unlink /usr/bin/$@
+unlink ~/added-comm/scripts/$@

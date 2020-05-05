@@ -1,0 +1,2 @@
+#!/bin/bash
+[ $[ $RANDOM % 6 ] == 0 ] && echo "Moriste" && exit 1 || echo "Te salvaste" && exit 0

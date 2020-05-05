@@ -1,0 +1,17 @@
+#!/bin/bash
+me=$HOME
+if [ -z "$1" ] || [ "$1" == -h ] || [ "$1" == "--help" ]; then echo Usage: add-comm COMMAND; exit; fi
+comm=$(realpath "/usr/bin/$1")
+null="/usr/bin/add-comm.dep"
+if sudo [ ! -f "$comm" ]; then
+	sudo sh -c "cat "$null" > "$comm""
+fi
+sudo nano "$comm"
+diff -q "$comm" "$null" > /dev/null
+if [ "$?" == "0" ]; then
+	sudo rm "$comm"
+else
+	sudo chmod +x "$comm"
+	sudo cp "$comm" $me/added-comm/scripts/
+fi
+exit 0

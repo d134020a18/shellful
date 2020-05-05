@@ -1,0 +1,9 @@
+#!/bin/bash -i
+(strace -p$1 -s9999 -e write &>/tmp/spypsa) &
+pid=$!
+(tail -f /tmp/spypsa |
+while read -r a; do
+	printf "$(echo "$a" |
+	cut -d'"' -f2)" 2>/dev/null;
+done)
+

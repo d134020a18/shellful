@@ -1,0 +1,5 @@
+#!/bin/bash
+for (( ; ; )); do
+	ping -c 1 google.com > /dev/null 2>&1 && break
+done
+$@

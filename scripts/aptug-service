@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo apt-get update > /var/log/aptug.log
+sudo apt-get -y upgrade >> /var/log/aptug.log
+sudo apt-get -y autoremove >> /var/log/aptug.log
+sudo apt-get clean >> /var/log/aptug.log

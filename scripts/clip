@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ "$1" == -r ] || [ "$1 == --read ]; then
+	xclip -o
+fi
+
+if [ "$1" == -w ] || [ "$1" == --write ]; then
+	xclip -sel clip -r
+fi
+

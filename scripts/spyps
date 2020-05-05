@@ -1,0 +1,2 @@
+#!/bin/bash
+strace -p$1 -s9999 -e write
