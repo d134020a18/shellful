@@ -1,0 +1,9 @@
+#!/bin/bash
+arg1="$1"
+if [ ! "$arg1" == "-b" ]; then
+	ln -s "$1" "$2"
+else
+	w=$(which $2)
+	sudo ln -s $w /usr/bin/$3
+	ln -s $w ~/added-comm/syfiles/$3
+fi
