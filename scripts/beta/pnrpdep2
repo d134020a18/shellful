@@ -1,0 +1,4 @@
+#!/bin/bash
+#Librarie of pnrp
+dpkg --list | awk '{print $2}'
+
