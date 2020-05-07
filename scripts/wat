@@ -1,2 +1,8 @@
 #!/bin/bash
-for (( ; ; )); do if "$@"; then break; fi; done
+#Do a loop
+for (( ; ; )); do
+  #Break if success
+  if "$@"; then
+    break
+  fi
+done
