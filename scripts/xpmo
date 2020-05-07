@@ -1,38 +1,44 @@
 #!/bin/bash
 #noman
-set -x
 x=xdotool
 
+#Move mouse to (X Y)
 m() {
 $x mousemove $1 $2
 ${@:3}
 }
 
-r() {
-$x mousemove $(cat /tmp/xpmogmpos)
-$@
-}
-
-bxr() {
-$x click $1
-${@:2}
-}
-
-w() {
-$x type "$1"
-${@:2}
-}
-
-wb() {
-seq $1 | xargs -Inull $x key BackSpace
-${@:2}
-}
-
+#Get mouse location to use later with "r" funcrion
 g() {
 get mousexy > /tmp/xpmogmpos
 $@
 }
 
+#Restore the mouse to the position getted with "g" function
+r() {
+$x mousemove $(cat /tmp/xpmogmpos)
+$@
+}
+
+#Click a mouse button
+bxr() {
+$x click $1
+${@:2}
+}
+
+#Write text
+w() {
+$x type "$1"
+${@:2}
+}
+
+#Write BackSpace n times
+wb() {
+seq $1 | xargs -Inull $x key BackSpace
+${@:2}
+}
+
+#Sleep n seconds
 slep() {
 eval sleep $1
 ${@:2}
