@@ -1,3 +1,8 @@
 #!/bin/bash
-if $@; then bepi; else ! bepe; fi
+#Start command and check if success
+if $@; then
+	bepi
+else
+  ! bepe;
+fi
 exit $?
