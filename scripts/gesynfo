@@ -52,7 +52,7 @@ gesynfo_sshsessions() {
 }
 
 #Get CPU speed
-cpuspeed() {
+gesynfo_cpuspeed() {
 	sudo dmidecode |
 	grep MHz
 }
