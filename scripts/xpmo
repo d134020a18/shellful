@@ -38,6 +38,11 @@ seq $1 | xargs -Inull $x key BackSpace
 ${@:2}
 }
 
+#Press enter
+n() {
+  xdotool key Return
+}
+
 #Sleep n seconds
 slep() {
 eval sleep $1
