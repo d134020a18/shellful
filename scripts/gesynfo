@@ -6,7 +6,7 @@ gesynfo_dispres() {
 }
 
 gesynfo_ip() {
-	i=$(ls -1 /sys/class/net | grep -vx lo);
+	i=$(route | grep '^default' | grep -o '[^ ]*$');
 	[ -z "$1" ] || i=$1
 	echo "$i" |
 	while read a; do
