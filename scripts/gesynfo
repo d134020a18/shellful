@@ -18,9 +18,9 @@ gesynfo_apip() {
 eval $(echo "awk '/default/&&/$1/&&/via/{print \$3}' <(ip r)")
 }
 
-#gesynfo_ifofip() {
+gesynfo_ifofip() {
 echo Soon...
-#}
+}
 
 gesynfo_ptsinfo() {
 	ps -A -o user:20,pid,tty,command |
