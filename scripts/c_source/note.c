@@ -26,9 +26,10 @@ int main(int argc,char * argv[]) {
 				if(strncmp(line, pattern, patlenght) == 0)
 				{
 					//Remove pattern of line
-					char *nop = &line[3];
+					char *out = line;
+					out += patlenght;
 					//Print that line
-					printf(nop);
+					printf("%s\n",out);
 				}
 				else
 				{
@@ -44,7 +45,7 @@ int main(int argc,char * argv[]) {
 			char comment[1000];
 			printf("Write the note:");
 			for(;;) {
-				scanf("%s", &comment);
+				scanf("%[^\n]s", &comment);
 				if(strcmp(comment,"breaknote")!=0) {
 					//Save to file
 					fprintf(fp, "%s#%s\n", pattern,comment);
