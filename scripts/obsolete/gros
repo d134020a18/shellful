@@ -1,3 +1,0 @@
-#!/bin/bash
-sudo echo grub-reboot \"$\(grep -i \'$@\' /boot/grub/grub.cfg\|cut -d\"\'\" -f2\)\" | sudo sh > /dev/null 2>&1
-if [ "$?" == "1" ]; then echo OS not found; exit 1; fi
