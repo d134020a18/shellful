@@ -1,0 +1,146 @@
+#!/bin/bash
+
+#### Set variables ####
+
+# Dir
+dir="$(realpath ~/.work)"
+
+# Database
+d=".work.db"
+
+########
+
+cd "$dir"
+
+#### Add new files to database ####
+
+n=1
+
+# Get files
+dir -1|
+while read file; do
+
+	# Search file in database
+	existent="$(cat "$d" 2>/dev/null | grep -x "$file" "$d")"
+
+	# Check if exists
+	[ -z "$existent" ] &&
+
+	# If not exists, then print
+	printf "$file\n\n"
+
+	n=$(($n+1))
+# Add all prints to database
+done >> "$d"
+
+########
+
+n=1
+
+#### Delete files no exists anymore from database ####
+
+# Get database content
+
+cat "$d"|
+while read line; do
+
+	# If line even
+	(($n % 2)) && (
+
+	# If file not exists
+	[ -f "$line" ] ||
+
+	# Remove file and data from database
+	sed -i "${n}d;$(($n+1))d" "$d"
+
+	)
+
+	n=$(($n+1))
+done
+
+########
+
+
+#### Sort ####
+
+n=0
+
+
+# Finish loop when passed all files
+
+while [ $n != $(($(wc -l < "$d"))) ]; do
+
+	n=$(($n+2))
+
+	[ -z $(sed -n "${n}p" "$d") ] || (
+	([ -z $(sed -n "2p" "$d") ] || (( $(sed -n "${n}p" "$d") < $(sed -n '2p' "$d")))) && (
+	sed -e '1,'"$(($n-1))"'!b' -e "$(($n-1))"'!H;1h;'"$(($n-1))"'!d;G' -i "$d"
+	sed -e '2,'"$n"'!b' -e "$n"'!H;2h;'"$n"'!d;G' -i "$d"
+	))
+
+done
+
+
+
+
+########
+
+if ! [ -z "$1" ]; then
+
+	#### If have arguments ####
+
+	# If argument "add"
+	if [ "$1" == "add" ] && ! [ -z "$2" ]; then
+		echo "$3\n" >> $2
+		n=0
+
+	# If argument "read"
+	elif [ "$1" == "read" ]; then
+		cat $(awk "NR==$2" <(sed -n 'p;n' "$d"))
+
+	# If argument "del"
+	elif [ "$1" == "del" ]; then
+		mv "$2" /trash
+
+	# If argument "text"
+	elif [ "$1" == "text" ]; then
+		ok mousepad "$2"
+
+	# If argument "date"
+	elif [ "$1" == "date" ]; then
+		sed -i "$(($2+$2))s/.*/$5$4$3/" "$d"
+
+	# If argument "finish"
+	elif [ "$1" == "finish" ]; then
+		[ -z "$3" ] ||
+		m="$3"
+		mv $(awk "NR==$2" <(sed -n 'p;n' "$d")) .past/$m/
+
+	fi
+
+	########
+
+else
+
+	n=1
+	nu=1
+
+	#### Print all files ####
+
+	# Finish loop when passed all files
+	while [ $n != $(($(wc -l < "$d") / 2+1)) ]; do
+
+		# Get work date
+
+		date=$(sed -n $(($nu+1))p .work.db)
+		fixed=$((printf $date | cut -c7,8 | tr -d $'\n';printf "/";printf $date | cut -c5,6 | tr -d $'\n';printf "/";printf $date | cut -c1-4) 2>/dev/null)
+
+		# Print line number, work and date
+		echo $n: $([ -z "$(sed -n $(($nu+1))p .work.db)" ] || (printf $fixed;printf " |")) $(sed -n "${nu}p" .work.db)
+
+		n=$(($n+1));nu=$(($nu+2))
+
+	done
+
+	########
+fi
