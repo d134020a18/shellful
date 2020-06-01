@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -i
+
 #Get display resolution
 gesynfo_dispres() {
 	xdpyinfo |
@@ -6,9 +7,9 @@ gesynfo_dispres() {
 	sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/' 
 }
 
-#Get ip
+#Get ip/s
 gesynfo_ip() {
-	i=$(route | grep '^default' | grep -o '[^ ]*$');
+	i=$(ls -1 /sys/class/net | grep -vx lo);
 	[ -z "$1" ] || i=$1
 	echo "$i" |
 	while read a; do
@@ -21,10 +22,10 @@ gesynfo_apip() {
 eval $(echo "awk '/default/&&/$1/&&/via/{print \$3}' <(ip r)")
 }
 
-#Get the interface that owns an ip
-gesynfo_ifofip() {
-	echo Soon...
-}
+#Get the interface of a ip
+#gesynfo_ifofip() {
+#Soon...
+#}
 
 #Get user and pid of a pts
 gesynfo_ptsinfo() {
@@ -36,28 +37,20 @@ gesynfo_ptsinfo() {
 #Get active ssh sessions
 gesynfo_sshsessions() {
 	out=$(
-	#Get sessions
 	who |
-	#Grep pts sessions
 	awk '/pts\// {print $2}' |
 	while read pts; do
 		gesynfo_ptsinfo $pts
 	done)
-	#Check if have active ssh sessions
-	if ! [ -z "$out" ]; then
-		echo "$out"
-	else
+	if [ -z "$out" ]; then
 		(echo No ssh connections; exit 1)
+	else
+		echo "$out"
 	fi
 }
 
-#Get CPU speed
-gesynfo_cpuspeed() {
-	sudo dmidecode |
-	grep MHz
-}
-
 #Get mouse position
+#Requires xdotool
 gesynfo_mousexy() {
 	xd getmouselocation --shell |
 	head -n 2 |

@@ -1,7 +1,7 @@
-
 #include <stdio.h>
 #include <string.h>  //for strcat
 #include <stdlib.h>
+#include <string.h> //To compare strings
 char *replace(const char *s, const char *oldW, const char *newW)
 {
     char *result;
@@ -68,14 +68,32 @@ char *chan(char *comm) {
 	return comm;
 }
 int main(int argc,char * argv[]) {
-	int n;
-	char ul[1000] = "beep ";
-	char *ol = chan(argv[1]);
-	ol += 4;
-	strcat(ul,ol);
-	for(n = 2; n < argc; ++n) {
-		strcat(ul,chan(argv[n]));
+	//Check if have arguments
+	if(argv[1] == NULL) {
+		printf("Error: No arguments\n");
+		return 1;
+	}else{
+		if(strcmp(argv[1],"-f")==0) {
+			//Declare file
+			FILE *fp;
+			char *filepath = strcat(getenv("HOME"),"/.bepmuc");
+			char *file = strcat(filepath,argv[2]);
+			//Open file in read mode
+			fp = fopen(file,"r");
+			char c;
+			while(c=fgetc(fp) != EOF){
+				printf("%c",c);
+			};
+		}
+		int n;
+		char ul[1000] = "beep ";
+		char *ol = chan(argv[1]);
+		ol += 4;
+		strcat(ul,ol);
+		for(n = 2; n < argc; ++n) {
+			strcat(ul,chan(argv[n]));
+		}
+		system(ul);
+		return 0;
 	}
-	system(ul);
-	return 0;
 }

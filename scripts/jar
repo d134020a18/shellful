@@ -1,2 +1,3 @@
 #!/bin/bash
-java -jar "$(realpath ${!#})"
+#java -jar
+java -jar $(which $1 || realpath $1) ${@:2}

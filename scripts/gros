@@ -1,0 +1,13 @@
+#!/bin/bash
+os=$(grep -i "$1" /boot/grub/grub.cfg|cut -d"'" -f2)
+if ! [ -z "$os" ]; then
+	if (sudo grub-reboot "$os"); then
+		echo Reboot to $1
+	else
+	echo Error
+	exit 1
+	fi
+else
+	echo Cant find \'$1\' in grub configuration
+	exit 1
+fi

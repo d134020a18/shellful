@@ -1,11 +1,8 @@
 #!/bin/bash
 arg1="$1"
-#Check arguments
 if [ ! "$arg1" == "-b" ]; then
-#Create link
-  ln -s "$1" "$2"
+	ln -s "$1" "$2"
 else
-  #Create link for a program
 	w=$(which $2)
 	sudo ln -s $w /usr/bin/$3
 	ln -s $w ~/added-comm/syfiles/$3
