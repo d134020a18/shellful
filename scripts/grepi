@@ -1,19 +1,14 @@
 #!/bin/bash
 if [ "$1" == "-v" ]; then
-	ca=2
-	pe=3
-	v="-v"
+	a=2
 else
-	ca=1
-	pe=2
+	a=1
+	v=v
 fi
-mo=${!pe}
-if ! [ -z "$mo" ]; then
-	path="$mo"; else path="."
+b=$(($a+1))
+if [ -z $b ]; then
+	ba=${!b}
+else
+	ba="."
+grep -riL$v "${!a}" "$ba"
 fi
-ls -p "$path" |
-grep -v / |
-while read a; do
-	cat "$(realpath $path)/$a" |
-	(grep $v "${!ca}" > /dev/null) && echo "$a"
-done
