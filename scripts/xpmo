@@ -4,38 +4,43 @@ set -x
 x=xdotool
 
 m() {
-$x mousemove $1 $2
-${@:3}
+	$x mousemove $1 $2
+	${@:3}
 }
 
 r() {
-$x mousemove $(cat /tmp/xpmogmpos)
-$@
+	$x mousemove $(cat /tmp/xpmogmpos)
+	$@
 }
 
 bxr() {
-$x click $1
-${@:2}
+	$x click $1
+	${@:2}
 }
 
 w() {
-$x type "$1"
-${@:2}
+	$x type "$1"
+	${@:2}
 }
 
 wb() {
-seq $1 | xargs -Inull $x key BackSpace
-${@:2}
+	seq $1 | xargs -Inull $x key BackSpace
+	${@:2}
 }
 
 g() {
-get mousexy > /tmp/xpmogmpos
-$@
+	get mousexy > /tmp/xpmogmpos
+	$@
 }
 
 slep() {
-eval sleep $1
-${@:2}
+	eval sleep $1
+	${@:2}
+}
+
+bep() {
+	bepi
+	$@
 }
 
 $@
