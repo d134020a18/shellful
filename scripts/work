@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 #### Set variables ####
 
 # Dir
@@ -64,6 +64,7 @@ done
 #### Sort ####
 
 n=0
+nu=2
 
 
 # Finish loop when passed all files
@@ -72,11 +73,19 @@ while [ $n != $(($(wc -l < "$d"))) ]; do
 
 	n=$(($n+2))
 
-	[ -z $(sed -n "${n}p" "$d") ] || (
-	([ -z $(sed -n "2p" "$d") ] || (( $(sed -n "${n}p" "$d") < $(sed -n '2p' "$d")))) && (
-	sed -e '1,'"$(($n-1))"'!b' -e "$(($n-1))"'!H;1h;'"$(($n-1))"'!d;G' -i "$d"
-	sed -e '2,'"$n"'!b' -e "$n"'!H;2h;'"$n"'!d;G' -i "$d"
-	))
+	[ -z $(sed -n "${n}p" "$d") ] ||
+
+	while [ $nu != $n ]; do
+
+		([ -z $(sed -n "${nu}p" "$d") ] || (( $(sed -n "${n}p" "$d") < $(sed -n '${nu}p' "$d")))) && (
+
+		sed -e "$(($nu-1)),$(($n-1))"'!b' -e "$(($n-1))"'!H;'"$(($nu-1))"'h;'"$(($n-1))"'!d;G' -i "$d"
+		sed -e "$nu,$n"'!b' -e "$n"'!H;'"${nu}h"';'"$n"'!d;G' -i "$d"
+		)
+
+		nu=$(($nu+2))
+
+	done
 
 done
 
@@ -91,7 +100,7 @@ if ! [ -z "$1" ]; then
 
 	# If argument "add"
 	if [ "$1" == "add" ] && ! [ -z "$2" ]; then
-		echo "$3\n" >> $2
+		echo "$3" >> $2
 		n=0
 
 	# If argument "read"
@@ -114,7 +123,7 @@ if ! [ -z "$1" ]; then
 	elif [ "$1" == "finish" ]; then
 		[ -z "$3" ] ||
 		m="$3"
-		mv $(awk "NR==$2" <(sed -n 'p;n' "$d")) .past/$m/
+		mv "$(awk "NR==$2" <(sed -n 'p;n' "$d"))" .past/$m/
 
 	fi
 
