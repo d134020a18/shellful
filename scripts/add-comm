@@ -12,6 +12,6 @@ if [ "$?" == "0" ]; then
 	sudo rm "$comm"
 else
 	sudo chmod +x "$comm"
-	sudo cp "$comm" /d134020a18/C-Bash_Utils/scripts/
+	sudo cp "$comm" /d134020a18/added-comm/scripts/
 fi
 exit 0
