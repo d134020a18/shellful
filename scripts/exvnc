@@ -1,4 +1,5 @@
 #!/bin/bash
+#noman
 W=1280
 H=1024
 O=DVI-I-1
