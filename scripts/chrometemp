@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 path=/var/tmp/.chrometemp
 mkdir -p $path
 args="$1"
