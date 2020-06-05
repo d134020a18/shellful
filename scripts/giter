@@ -1,6 +1,0 @@
-#!/bin/bash
-#noman
-path=/tmp/$RANDOM
-git clone https://github.com/d134020a18/C-Bash_Utils $path
-cd $path
-sudo make install
