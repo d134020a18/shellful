@@ -1,14 +1,32 @@
 #!/bin/bash
-if [ "$1" == "-v" ]; then
-	a=2
-else
-	a=1
-	v=v
+
+# n of pattern to search
+np=1
+
+#### Detect option arguments ####
+
+# If no option arguments
+if [ -z "$2" ]; then
+	np=1
+	i() { $@;}
+
+# If argument "-v" then n=n+1
+elif [ "$1" == "-v" ]; then
+	np=$((np+1))
+	i() { ! $@;}
+
 fi
-b=$(($a+1))
-if [ -z $b ]; then
-	ba=${!b}
-else
-	ba="."
-grep -riL$v "${!a}" "$ba"
+
+########
+
+pe=$((np+1))
+mo="${!pe}"
+if ! [ -z "$mo" ]; then
+	path="$mo"; else path="."
 fi
+ls -p "$path" |
+grep -v / |
+while read a; do
+	cat "$(realpath $path)/$a" |
+	(i grep "${!np}" > /dev/null) && echo "$a"
+done
