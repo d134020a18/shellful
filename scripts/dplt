@@ -12,7 +12,7 @@ nano install
 echo "$(echo $cd | cut -d'-' -f2)" > source/format
 echo Modify the files in debian/ and press enter
 read
-#rm *.ex
+rm *.ex
 if ! [ -z "$2" ]; then key="-k$2"; fi
 cd ..
 debuild -us -uc $key

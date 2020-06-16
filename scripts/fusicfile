@@ -1,0 +1,11 @@
+#!/bin/bash
+#noman
+cat "$1" |
+
+# Apply command for each line
+while read -r line; do
+
+	# If exists line, then write to file
+	fusicfiledep "$line" "$2"
+
+done

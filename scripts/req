@@ -1,0 +1,14 @@
+#!/bin/bash
+#noman
+main() {
+	for i in $(seq 2 $#); do
+		fusicfiledep "${!i}" "$HOME/added-comm/requeriments/$1"
+	done
+}
+if ! [ "$1" == "-r" ]; then
+	main $@
+else
+	for o in $(seq 3 $#); do
+		main "${!o}" "$2"
+	done
+fi

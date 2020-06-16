@@ -1,9 +1,16 @@
 #!/bin/bash
-arg1="$1"
-if [ ! "$arg1" == "-b" ]; then
-	ln -s "$1" "$2"
-else
+
+# If no arguments
+if [ -z "$1" ]; then
+	echo Arguments required
+
+# If argument "-b", then make symlink to command
+elif [ "$1" == "-b" ]; then
 	w=$(which $2)
-	sudo ln -s "$w" "/usr/bin/$3"
-	ln -s "$w" "~/added-comm/syfiles/$3"
+        sudo ln -s "$w" "/usr/bin/$3"
+        ln -s "$w" "~/added-comm/syfiles/$3"
+
+else
+	# If no option argumants detected, then create normal symlink
+	ln -s "$(realpath $1)" "$(realpath $2)"
 fi

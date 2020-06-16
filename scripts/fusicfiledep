@@ -1,0 +1,10 @@
+#!/bin/bash
+#noman
+
+# Search line in file
+string="$(cat "$2" 2>&1 | grep -x "$1")"
+
+# If not exists line, then write to file
+if [ -z "$string" ]; then
+	echo "$1" >> "$2"
+fi

@@ -1,1 +1,5 @@
 dpkg
+dh-make
+build-essential
+fakeroot
+devscripts
