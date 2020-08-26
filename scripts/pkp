@@ -1,2 +1,0 @@
-#!/bin/bash
-pagekite.py $@.pagekite.me

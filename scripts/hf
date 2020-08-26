@@ -1,0 +1,6 @@
+#!/bin/bash -i
+#Author IkeDarien
+#Grep commands in history
+set -x
+history |
+awk "/$@/"

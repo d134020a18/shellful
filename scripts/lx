@@ -1,0 +1,5 @@
+#!/bin/bash
+#Author IkeDarien
+#Combination of xdotool and lsudo
+#Requires xdotool
+echo XAUTHORITY=/var/lib/lightdm/.Xauthority DISPLAY=:0.0 sudo sh -c \'xdotool type "$@"\' | sh
