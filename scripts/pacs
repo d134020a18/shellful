@@ -1,0 +1,4 @@
+#!/bin/bash
+#noman
+pacman -S $@
+

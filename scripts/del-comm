@@ -1,3 +1,5 @@
 #!/bin/bash
-unlink /usr/bin/$@
-unlink /*/added-comm/scripts/$@
+me=$HOME
+sudo true
+sudo unlink /usr/bin/$@
+unlink $home/added-comm/scripts/$@
