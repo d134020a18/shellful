@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
 elif [ "$1" == "-b" ]; then
 	w=$(which $2)
         sudo ln -s "$w" "/usr/bin/$3"
-        ln -s "$w" "~/added-comm/syfiles/$3"
+#        ln -s "$w" "~/added-comm/syfiles/$3"
 
 else
 	# If no option argumants detected, then create normal symlink
