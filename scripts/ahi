@@ -1,5 +1,14 @@
 #!/bin/bash
+set -x
+host=google.com
+m=$@
+
+[ -z "$1" ] || {
+[ "$1" == "-h" ] &&
+host=$2;m=${@:3}
+}
+
 for (( ; ; )); do
-	ping -c 1 google.com > /dev/null 2>&1 && break
+	ping -c 1 $host > /dev/null 2>&1 && break
 done
-$@
+$m
