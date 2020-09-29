@@ -5,7 +5,7 @@ if ! dh_make --indep --createorig; then
 	echo error; #kill -9 $$;
 fi
 cd debian
-nano control
+"${EDITOR:-vim}" control
 #grep -v makefile rules > rules.new
 #mv rules.new rules
 nano install

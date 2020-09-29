@@ -1,4 +1,5 @@
 #!/bin/bash
+
 host=google.com
 m=$@
 
@@ -8,6 +9,7 @@ host=$2;m=${@:3}
 }
 
 for (( ; ; )); do
+	sleep 2
 	ping -c 1 $host > /dev/null 2>&1 && break
 done
 $m

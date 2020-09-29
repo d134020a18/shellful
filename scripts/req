@@ -2,7 +2,7 @@
 #noman
 main() {
 	for i in $(seq 2 $#); do
-		fusicfiledep "${!i}" "$HOME/added-comm/requeriments/$1"
+		fusicfiledep "${!i}" "$HOME/added-comm/requeriments/$1.req"
 	done
 }
 if ! [ "$1" == "-r" ]; then

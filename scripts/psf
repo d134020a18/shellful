@@ -1,2 +1,2 @@
-#!/bin/bash -i
+#!/bin/bash
 if [ -z "$@" ]; then ps -ax; else ps -ax | grep "$@" | grep -v $$; fi
