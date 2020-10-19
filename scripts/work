@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+
 #### Set variables ####
 
 # Dir
@@ -9,7 +9,7 @@ dir="$(realpath ~/.work)"
 d=".work.db"
 
 ########
-
+mkdir -p "$dir"
 cd "$dir"
 
 #### Add new files to database ####
@@ -67,7 +67,7 @@ n=0
 nu=2
 
 
-# Finish loop when passed all files
+# Finish loop when processed all files
 
 while [ $n != $(($(wc -l < "$d"))) ]; do
 
@@ -105,11 +105,11 @@ if ! [ -z "$1" ]; then
 
 	# If argument "read"
 	elif [ "$1" == "read" ]; then
-		cat $(awk "NR==$2" <(sed -n 'p;n' "$d"))
+		cat "$(awk "NR==$2" <(sed -n 'p;n' "$d"))"
 
 	# If argument "del"
-	elif [ "$1" == "del" ]; then
-		mv "$2" /trash
+	elif [ "$1" == "del" ]; then	
+		rm "$(awk "NR==$2" <(sed -n 'p;n' "$d"))"
 
 	# If argument "text"
 	elif [ "$1" == "text" ]; then
@@ -117,12 +117,13 @@ if ! [ -z "$1" ]; then
 
 	# If argument "date"
 	elif [ "$1" == "date" ]; then
-		sed -i "$(($2+$2))s/.*/$5$4$3/" "$d"
+		sed -i "$(($2+$2))s/.*/$5$4$3/" "$d";
 
 	# If argument "finish"
 	elif [ "$1" == "finish" ]; then
 		[ -z "$3" ] ||
-		m="$3"
+		m="$3";
+		mkdir -p ".past/$m/";
 		mv "$(awk "NR==$2" <(sed -n 'p;n' "$d"))" .past/$m/
 
 	fi

@@ -7,8 +7,7 @@ if sudo [ ! -f "$comm" ]; then
 	sudo sh -c "cat "$null" > "$comm""
 fi
 sudo nano "$comm"
-diff -q "$comm" "$null" > /dev/null
-if [ "$?" == "0" ]; then
+if { diff -q "$comm" "$null" > /dev/null; }; then
 	sudo rm "$comm"
 else
 	sudo chmod +x "$comm"

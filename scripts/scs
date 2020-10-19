@@ -1,4 +1,6 @@
 #!/bin/bash
-dt="$(date +"%d-%m-%y_%R:%S")"
-maim ~/screenshots/$dt.png
-
+dir="$(realpath ~/screenshots)"
+dt="$(date +"%d-%m-%Y_%R:%S")"
+mkdir -p "$dir"
+cd "$dir"
+maim $dt.jpg
