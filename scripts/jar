@@ -1,3 +1,12 @@
 #!/bin/bash
 #java -jar
-java -jar $(which $1 || realpath $1) ${@:2}
+main() {
+	java -jar $@
+}
+if [ -f "${#}" ]; then
+	main "${!#}";
+elif (whereis "${!#}"); then
+	main $(ls -1 $(whereis ${!#}|cut -d ':' -f2) | awk /${!#}$/);
+else
+	echo Not found;
+fi;

@@ -1,0 +1,17 @@
+#!/bin/bash
+#noman
+set -x;
+
+necha.py |
+	while read error; do
+		if [$error != 0]; then
+			while true; do
+				(beep -f 100 -D 1000 -n -f 1000 -D 1000);
+			done&
+			pid=$!;
+			trap "kill $pid; echo Terminating...; exit" SIGINT;
+		else
+			kill $pid;
+#			bepmuc -f internet;
+		fi;
+	done;

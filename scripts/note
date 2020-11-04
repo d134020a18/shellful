@@ -1,7 +1,14 @@
 #!/bin/bash
-if [ "$1" == "-r" ]; then
-cat ~/.notes.db | grep "$2\#" | sed -e "s/$2#//"
-else
+
+
+
+[ "$1" == "read" ] && { 
+cat ~/.notes.db | grep "$2\#" | sed -e "s/$2#//"; }
+
+
+
+
+[ "$1" == "edit" ] {
 	echo Write the note:
 	for (( ; ; )); do
 		read note;
@@ -11,4 +18,5 @@ else
 			echo $1\#$note >> ~/.notes.db
 		fi;
 	done
-fi
+}
+

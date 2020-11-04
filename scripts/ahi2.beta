@@ -1,0 +1,21 @@
+#!/bin/python2
+import sys
+import urllib2
+
+# Set host as http://google.com, but if have arguments set first argument as host
+if len(sys.argv) != 1:
+    host = "http://" + sys.argv[1]
+else:
+    host = "http://google.com"
+print(host)
+# Ping to HOST until recive a response
+def wait_for_internet_connection():
+    while True:
+        try:
+            response = urllib2.urlopen(host,timeout=1)
+            return
+        except urllib2.URLError:
+            pass
+
+# Start the function
+wait_for_internet_connection()
