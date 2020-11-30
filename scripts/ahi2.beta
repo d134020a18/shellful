@@ -15,7 +15,7 @@ def wait_for_internet_connection():
             response = urllib2.urlopen(host,timeout=1)
             return
         except urllib2.URLError:
-            pass
+            wait_for_internet_connection()
 
 # Start the function
 wait_for_internet_connection()

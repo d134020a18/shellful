@@ -1,16 +1,38 @@
 #!/bin/bash
+
+# Get home
 me=$HOME
-if [ -z "$1" ] || [ "$1" == -h ] || [ "$1" == "--help" ]; then echo Usage: add-comm COMMAND; exit; fi
-comm=$(realpath "/usr/bin/$1")
-null="/usr/bin/add-comm.dep"
-if sudo [ ! -f "$comm" ]; then
-	sudo sh -c "cat "$null" > "$comm""
+
+# If no arguments or specify -h(elp), then show help
+if [ -z "$1" ] || [ "$1" == -h ] || [ "$1" == "--help" ]; then 
+	echo Usage: add-comm COMMAND;
+	exit;
 fi
-sudo nano "$comm"
-if { diff -q "$comm" "$null" > /dev/null; }; then
-	sudo rm "$comm"
+
+# Get real path of specyfed command
+comm=$(realpath "/usr/bin/$1");
+
+# Get the layer
+layer="/usr/bin/add-comm.dep";
+
+
+# If command does not exist, then create with the layer
+if sudo [ ! -f "$comm" ]; then 
+	sudo sh -c "cat "$layer" > "$comm"";
+fi;
+
+
+# Edit the command with root privilegies
+sudo ${VISUAL-${EDITOR-vim}} "$comm";
+
+# If the command is still equal the layer, delete it with root privilegies
+if { diff -q "$comm" "$layer" > /dev/null; }; then 
+	sudo rm "$comm";
+
 else
-	sudo chmod +x "$comm"
-	sudo cp "$comm" $me/added-comm/scripts/
-fi
-exit 0
+
+	# Else add execution permissions and copy to $me/added-comm/scripts
+	sudo chmod +x "$comm";
+	sudo cp "$comm" $me/added-comm/scripts/;
+
+fi;

@@ -2,6 +2,8 @@
 #noman
 set -x;
 
+server="$1"
+
 log() {
 	[ "$last" != "$1" ] &&
 	echo $(date): $2 >> ~/necha;
@@ -9,7 +11,7 @@ log() {
 }
 
 while sleep 2; do
-	if (ping -W 1 -c 1 google.com); then
+	if (ping -W 1 -c 1 ${server:=google.com}); then
 		log 0 "Connected succefully";
 	else
 		log 1 "Error: Connection Failed";
@@ -18,7 +20,7 @@ while sleep 2; do
 		done&
 		pid=$!;
 		trap "kill $pid; echo Terminating...; exit" SIGINT;
-		ahi #-h 192.168.0.1;
+		ahi -h ${server:=google.com};
 		kill $pid;
 		log 0 "Reconnected succefully";
 #		bepmuc -f internet;
