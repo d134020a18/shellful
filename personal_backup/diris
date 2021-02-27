@@ -1,0 +1,3 @@
+#!/bin/bash
+#noman
+du -h -d 1 "$1" 2>/dev/null

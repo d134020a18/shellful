@@ -1,0 +1,5 @@
+#!/bin/bash
+for file in $(git ls-files --others --exclude-standard); do
+	mkdir -p ../personal_backup/$(dirname $file);
+	cp $file ../personal_backup/$file;
+done

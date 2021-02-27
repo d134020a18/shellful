@@ -1,0 +1,5 @@
+#!/bin/bash
+#Author IkeDarien
+#Send permanent notification
+#Requires notify-send
+notify-send -t 0 "$@"

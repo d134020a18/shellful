@@ -1,0 +1,3 @@
+#!/bin/bash
+#noman
+s jmtpfs /Phone -o allow_other

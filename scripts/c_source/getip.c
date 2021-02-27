@@ -20,7 +20,7 @@ main(int argc,char *argv[])
  /* I want to get an IPv4 IP address */
  ifr.ifr_addr.sa_family = AF_INET;
 
- /* I want IP address attached to "eth0" */
+ /* I want IP address attached to interface specified in first argument */
  strncpy(ifr.ifr_name, argv[1], IFNAMSIZ-1);
 
  ioctl(fd, SIOCGIFADDR, &ifr);

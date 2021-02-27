@@ -1,0 +1,5 @@
+#!/bin/bash
+#noman
+# Merge files
+# mergef FILE FILEDEST
+cat "$1" >> "$2"

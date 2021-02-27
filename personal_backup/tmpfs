@@ -1,0 +1,9 @@
+#!/bin/bash
+#noman
+if [ ${1}o != umounto ]; then
+	mount -t tmpfs -o size=500m tmpfs /tmpfs &&
+	echo /tmpfs mounted\!
+else
+	umount -f /tmpfs &&
+	echo /tmpfs umounted\!
+fi

@@ -1,0 +1,5 @@
+#!/bin/bash
+paco="pactl load-module module-"
+${paco}jack-source
+${paco}jack-sink
+

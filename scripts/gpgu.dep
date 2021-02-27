@@ -1,0 +1,17 @@
+#!/bin/bash
+#noman
+set -x
+	gpg -e $1 "$2"&
+	pid=$!
+	[ -f /bin/progress ] &&
+		progress -mp $pid;
+	wait $pid
+	error=$?
+	if [ $error == 0 ]; then
+#		rm\
+		pdel\
+			"$2" || Failed deleting original file
+		
+	else
+		echo Failed encrypting file
+	fi

@@ -1,0 +1,5 @@
+#!/bin/python
+import sys
+def foca(moca):
+    print(moca)
+foca(sys.argv[1])

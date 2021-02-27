@@ -1,0 +1,3 @@
+#!/bin/bash
+#noman
+sox -d -d pitch "$1"

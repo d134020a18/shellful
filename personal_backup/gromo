@@ -1,0 +1,4 @@
+#!/bin/bash
+#Author IkeDarien
+#Beta
+if (ps -ax | grep gromit-mpx | grep "0:00 grom" | grep -v grep); then kill $(pidof gromit-mpx); else gromit-mpx -a; fi

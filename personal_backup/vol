@@ -1,0 +1,2 @@
+#!/bin/bash
+pactl set-sink-volume jack_out $1%

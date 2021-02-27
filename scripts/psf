@@ -1,2 +1,2 @@
 #!/bin/bash
-if [ -z "$@" ]; then ps -ax; else ps -ax |echo grep [${@:0:1}]${@:1}; fi
+if [ -z "$@" ]; then ps -ax; else args=$@; ps -ax |grep [${args:0:1}]${args:1}|grep -v ^\ \ \ $$; fi

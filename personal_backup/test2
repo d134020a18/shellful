@@ -1,0 +1,22 @@
+#!/bin/bash
+#set -x
+n=1
+while [ $n != $(($#+1)) ]; do 
+	if [ "a${!n}" == "a-r" ]; then
+		nu=2
+	else
+		nu=1
+	fi
+	:
+while [ $n != $(($#+1)) ]; do
+	if [ "a${!n}" != "a-r" ]; then
+		printf '%s ' "${!n}"
+		nu=1
+	else
+		narg=$(($n+1))
+		printf '%s ' "--recipient ${!narg}"
+		nu=2
+	fi
+	n=$(($n+$nu))
+done
+printf "$narg"

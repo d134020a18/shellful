@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ $1 == a ];then
+	a=1
+else
+	a=2
+fi
+echo $a

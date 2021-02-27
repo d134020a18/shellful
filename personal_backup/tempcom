@@ -1,0 +1,60 @@
+#!/bin/python
+import dbus, sys
+
+bus = dbus.SystemBus()
+
+
+def merge_secrets(proxy, config, setting_name):
+    try:
+            # returns a dict of dicts mapping name::setting, where setting is a dict
+	            # mapping key::value.  Each member of the 'setting' dict is a secret
+		            secrets = proxy.GetSecrets(setting_name)
+
+			            # Copy the secrets into our connection config
+				            for setting in secrets:
+						                for key in secrets[setting]:
+									                config[setting_name][key] = secrets[setting][key]
+											    except Exception, e:
+											            pass
+
+												    def list_connections():
+												        # Ask the settings service for the list of connections it provides
+													    service_name = "org.freedesktop.NetworkManager"
+													        proxy = bus.get_object(service_name, "/org/freedesktop/NetworkManager/Settings")
+														    settings = dbus.Interface(proxy, "org.freedesktop.NetworkManager.Settings")
+														        connection_paths = settings.ListConnections()
+
+															    ret = []
+															        # List each connection's name, UUID, and type
+																    for path in connection_paths:
+																	            con_proxy = bus.get_object(service_name, path)
+																		            settings_connection = dbus.Interface(con_proxy, "org.freedesktop.NetworkManager.Settings.Connection")
+																			            config = settings_connection.GetSettings()
+																				            connection = config.get('connection', {})
+
+																					            if connection['type'] == '802-11-wireless':
+																							                wireless = config.get('802-11-wireless', {})
+																									            merge_secrets(settings_connection, config, '802-11-wireless')
+																										                merge_secrets(settings_connection, config, '802-11-wireless-security')
+																												            lines = []
+
+																													                # https://mail.python.org/pipermail/tutor/2013-August/097352.html
+																															            lines.append('ssid="' + bytearray(wireless['ssid']).decode('utf-8') + '"')
+
+																																                security = config.get('802-11-wireless-security', None)
+																																		            if security is None:
+																																				                    continue # we don't need to export open access points
+																																						                    lines.append('key_mgmt=OPEN') # otherwise this would work
+																																								                elif security.get('key-mgmt') == 'wpa-psk':
+																																											                psk = security.get('psk', None)
+																																													                if psk is None: continue # security required but not present: skip
+																																																                lines.append('key_mgmt=WPA-PSK')
+																																																		                lines.append('psk="' + security.get('psk') + '"')
+																																																				            else:
+																																																						                    # @todo support other security mechanisms
+																																																								                    continue
+
+																																																										                print "network={\n" + u"\n".join(map(lambda s: '  '+s, lines)).encode('utf-8') + "\n}\n"
+
+																																																												if __name__ == '__main__':
+																																																													    list_connections()
