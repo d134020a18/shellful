@@ -3,6 +3,7 @@ from os.path import expanduser
 from datetime import datetime
 import time
 import urllib2
+from signal import signal, SIGPIPE, SIG_DFL
 home = expanduser("~")
 logfile = home + "/necha.log"
 last = 5
@@ -18,7 +19,7 @@ def log(error):
             if error == 1:
                 f.write(datime + " Failed connect\n")
         last = error
-
+        signal(SIGPIPE,SIG_DFL)
 def try_internet():
         while True:
             try:

@@ -1,4 +1,4 @@
 #!/bin/bash
 #noman
 pacman -Syu
-pacman -Rsn $(pacman -Qdtq)
+pacman --noconfirm -Rysn $(pacman -Qdtq)
