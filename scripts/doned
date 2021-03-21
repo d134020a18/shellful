@@ -5,6 +5,6 @@ a="$@"
 		if [[ "$line" == file:///* ]]; then 
 			ln -s $(echo "$line" | sed 's/file:\/\///g') .
 		else
-			wget $line;
+			wget -nc $line;
 		fi
-	done < <(ned -l $a $(ned $a))
+	done < <(ned -l $(ned $a))

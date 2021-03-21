@@ -3,5 +3,8 @@
 if [ "a$1" == "a-l" ]; then
 	pacman -Sp ${@:2};
 else
-	pacman -Si $@|sed -n '/Depends\ On/,/:/p'|sed '$d'|cut -d: -f2|awk '!/None/'|tr "\n" " ";
+	echo $@|tr " " "\n"|
+	while read pack; do
+	pactree "$pack" -lu
+done
 fi
