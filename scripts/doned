@@ -3,8 +3,8 @@
 a="$@"
 	while IFS= read -r line; do
 		if [[ "$line" == file:///* ]]; then 
-			ln $(echo "$line" | sed 's/file:\/\///g') .
-		#else
-			#wget $line;
+			ln -s $(echo "$line" | sed 's/file:\/\///g') .
+		else
+			wget $line;
 		fi
 	done < <(ned -l $a $(ned $a))
