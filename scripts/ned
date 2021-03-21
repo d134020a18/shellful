@@ -1,5 +1,7 @@
 #!/bin/bash
 #noman
-dir="$(realpath ~/.ned)"
-vim "$dir/$1"
-pacman -Sp $(cat "$dir/$1" | while read pack; do printf "$pack ";pacman -Si "$pack"|sed -n '/Depends\ On/,/:/p'|sed '$d'|cut -d: -f2|tr "\n" " "; done) > "$dir/$1.ned"
+if [ "a$1" == "a-l" ]; then
+	pacman -Sp ${@:2};
+else
+	pacman -Si $@|sed -n '/Depends\ On/,/:/p'|sed '$d'|cut -d: -f2|awk '!/None/'|tr "\n" " ";
+fi

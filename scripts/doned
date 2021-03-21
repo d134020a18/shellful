@@ -1,13 +1,10 @@
 #!/bin/bash
 #noman
-dir="$(realpath /home/d134020a18/.ned)"
-mkdir -p "$dir/$1.d"
-cd "$dir/$1.d"
-cat "$dir/$1.ned" |
-	while read pack; do
-		if [[ "$pack" =~ file:///.* ]]; then 
-			ln $(echo "$pack" | sed 's/file:\/\///g') .
-		else
-			wget $pack;
+a="$@"
+	while IFS= read -r line; do
+		if [[ "$line" == file:///* ]]; then 
+			ln $(echo "$line" | sed 's/file:\/\///g') .
+		#else
+			#wget $line;
 		fi
-	done
+	done < <(ned -l $a $(ned $a))
