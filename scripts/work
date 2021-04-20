@@ -94,43 +94,44 @@ done
 
 ########
 
-if ! [ -z "$1" ]; then
+case "$1" in
 
-	#### If have arguments ####
-
+	add)
 	# If argument "add"
-	if [ "$1" == "add" ] && ! [ -z "$2" ]; then
+	if ! [ -z "$2" ]; then
 		echo "$3" >> $2
 		n=0
+	fi
+		;;
 
+		read)
 	# If argument "read"
-	elif [ "$1" == "read" ]; then
 		cat "$(awk "NR==$2" <(sed -n 'p;n' "$d"))"
+		;;
 
+	del)
 	# If argument "del"
-	elif [ "$1" == "del" ]; then	
 		rm "$(awk "NR==$2" <(sed -n 'p;n' "$d"))"
+		;;
 
+	text)
 	# If argument "text"
-	elif [ "$1" == "text" ]; then
 		ok mousepad "$2"
-
+		;;
+	date)
 	# If argument "date"
-	elif [ "$1" == "date" ]; then
 		sed -i "$(($2+$2))s/.*/$5$4$3/" "$d";
+		;;
 
+	finish)
 	# If argument "finish"
-	elif [ "$1" == "finish" ]; then
 		[ -z "$3" ] ||
 		m="$3";
 		mkdir -p ".past/$m/";
 		mv "$(awk "NR==$2" <(sed -n 'p;n' "$d"))" .past/$m/
+		;;
 
-	fi
-
-	########
-
-else
+	"")
 
 	n=1
 	nu=1
@@ -153,4 +154,5 @@ else
 	done
 
 	########
-fi
+	;;
+esac
