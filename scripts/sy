@@ -9,13 +9,13 @@ echo Arguments required
 
 "-b")
 # If argument "-b", then make symlink to command
-        w=$(which $2)
-        sudo ln -s "$w" "/usr/bin/$3"
+	w=$(which $2)
+	sudo ln -s "$w" "/usr/bin/$3"
 #        ln -s "$w" "~/added-comm/syfiles/$3"
 ;;
 
 *)
 # If no option argumants detected, then create normal symlink
-        ln -s "$(realpath $1)" "$(realpath $2)"
+	ln -s "$(realpath $1)" "$(realpath $2)"
 ;;
 esac
