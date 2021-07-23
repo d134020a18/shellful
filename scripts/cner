@@ -1,16 +1,16 @@
 #!/bin/bash
-if [ "$1" == "-r" ]; then
-	cnee --record -o ~/events.xnr --mouse
-fi
-
-if [ "$1" == "-p" ]; then
-	cnee --replay -f ~/events.xnr
-fi
-
-if [ "$1" == "-k" ]; then
-	kill -9 $(pidof cnee)
-fi
-
 if [ -z "$1" ]; then
-echo Use arguments
+	echo Use arguments
+else
+
+	if [ "$1" == "-r" ]; then
+		cnee --record -o ~/events.xnr --mouse
+
+	elif [ "$1" == "-p" ]; then
+		cnee --replay -f ~/events.xnr
+
+	elif [ "$1" == "-k" ]; then
+		kill -9 $(pidof cnee)
+	fi
+	
 fi

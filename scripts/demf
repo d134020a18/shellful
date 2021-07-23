@@ -1,56 +1,12 @@
 #!/bin/bash
 
-# Detect arguments
-if [ -z $@ ] || ! [ $@ == --folder ]; then
+# Get file list
+ls -1p |
 
-	#### If no commands, remove empty files ####
+# Discard folders
+grep -v / |
 
-	# Get file list
-	ls -lp |
-
-	# Discard folders
-	grep -v / |
-
-	# Grep files have 0 bytes
-	awk '/ 0 /' |
-
-	# Get full name of file
-	awk '{ s = ""; for (i = 9; i <= NF; i++) s = s $i " "; print s }' |
-
-	# Remove each detected file
-	while read -r f; do
-		rm "$f";
-		echo "$f" deleted!
-	done
-
-	########
-
-else
-
-	#### If specifed "--folder", then delete empty folders ####
-
-	# If specify dir in second argument, then select it
-	if ! [ -z $2 ]; then
-		dir="$2";
-
-	else
-
-	# If dir not specifed, set the actual dir
-		dir="$PWD"
-
-	fi
-
-	for fls in "$dir"/*; do
-			echo "$fls";
-	done |
-
-	while read d; do
-		ls "$d" > /tmp/demf;
-		if ! [ -s /tmp/demf ];then
-			rmdir "$d";
-			echo "$d" deleted!
-		fi;
-	done;
-
-	########
-fi
+# Find empty files
+while read file; do
+! [ -s "$file" ] && rm "$file" && echo "$file" deleted\!
+done

@@ -1,3 +1,3 @@
 #!/bin/bash
-if $@; then bepi; else ! bepe; fi
+if $@; then beep -f 1000; else ! beep -f 200; fi
 exit $?

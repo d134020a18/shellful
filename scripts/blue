@@ -1,5 +1,0 @@
-#!/bin/bash
-#noman
-xcalib -i -a ;
-xrandr --output DVI-I-1 --brightness 1 --gamma 1.4:0.9:0.4
-xcalib -a;
