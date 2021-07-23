@@ -1,4 +1,0 @@
-#!/bin/bash
-echo pts
-read p
-yes echo Vete de mi pc \> /dev/pts/$p | sh

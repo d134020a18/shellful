@@ -1,4 +1,0 @@
-#!/bin/bash
-f="/usr/bin/$@"
-chown root "$f"
-chmod 755 "$f"

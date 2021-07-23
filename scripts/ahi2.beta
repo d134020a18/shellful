@@ -7,7 +7,6 @@ if len(sys.argv) != 1:
     host = "http://" + sys.argv[1]
 else:
     host = "http://google.com"
-print(host)
 # Ping to HOST until recive a response
 def wait_for_internet_connection():
     while True:

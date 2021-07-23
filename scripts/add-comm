@@ -10,7 +10,7 @@ if [ -z "$1" ] || [ "$1" == -h ] || [ "$1" == "--help" ]; then
 fi
 
 # Get real path of specyfed command
-comm=$(realpath "/usr/bin/$1");
+comm=$(realpath "/bin/$1");
 
 # Get the layer
 layer="/usr/bin/add-comm.dep";

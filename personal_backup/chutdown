@@ -1,2 +1,0 @@
-#!/bin/bash
-bepmuc -f shutdown;systemctl poweroff -i
