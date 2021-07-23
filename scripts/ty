@@ -1,2 +1,0 @@
-#!/bin/bash
-curl -H "Max-Days: 1" --upload-file "$@" https://transfer.sh/$(echo Name:; read a&&echo $a)
