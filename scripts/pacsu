@@ -1,4 +1,0 @@
-#!/bin/bash
-#noman
-pacman -Syu
-pacman --noconfirm -Rsn $(pacman -Qdtq)

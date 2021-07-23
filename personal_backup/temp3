@@ -1,7 +1,0 @@
-#!/bin/bash
-a() {
-	scs
-	sleep 10
-	a
-}
-a

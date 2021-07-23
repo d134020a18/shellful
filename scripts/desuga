@@ -2,12 +2,12 @@
 # This scripts reads lines from imput and shows which have the two first words repeated. This command was created initially to use with "sum"
 #noman
 tee |
-	touch .desuga &&
-		while read -r a; do
-			if o=$(grep "$(echo $a|awk '{print $1, $2}' )" .desuga); then
-				echo $a;
-				echo "$o";
-			else
-				echo $a>>.desuga;
-				fi;
-			done
+touch .desuga &&
+while read -r a; do
+	if o=$(grep "$(echo $a|awk '{print $1, $2}' )" .desuga); then
+		echo $a;
+		echo "$o";
+	else
+		echo $a>>.desuga;
+		fi;
+	done

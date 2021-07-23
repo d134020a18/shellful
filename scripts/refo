@@ -1,6 +1,0 @@
-#!/bin/bash
-#noman
-set -x
-[ "$(whoami)" == root ] || (echo Must be root;exit)
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-reflector $@ > /etc/pacman.d/mirrorlist

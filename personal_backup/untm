@@ -1,5 +1,0 @@
-#!/bin/bash
-#noman
-umount "$1"
-ntfsfix "$1"
-mount "$i"

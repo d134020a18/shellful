@@ -1,2 +1,0 @@
-#!/bin/bash
-sudo X -quiet -nolisten tcp -noreset :$2 vt$1
