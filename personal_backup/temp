@@ -1,5 +1,0 @@
-#!/bin/python
-from signal import signal, SIGPIPE, SIG_DFL
-signal(SIGPIPE,SIG_DFL)
-while True:
-	print("sasa")
