@@ -1,3 +1,0 @@
-#!/bin/bash
-#Librarie of pnrp
-dpkg --list | awk '{print $2}' | while read pkg; do aptr $pkg; done 2>&1 | grep -v paquete

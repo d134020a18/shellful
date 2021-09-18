@@ -1,8 +1,0 @@
-#!/bin/bash
-inotifywait -m "$1" -e create -e moved_to -e delete |
-while read path action file; do
-	if [ $action == CREATE ]; then a=appeared; fi
-	if [ $action == MOVED_TO ]; then a=moved; fi
-	if [ $action == DELETE ]; then a=deleted; fi
-	echo "File '$path$file' $a'"
-done

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 # Get home
 me=$HOME
 
@@ -12,13 +12,13 @@ fi
 # Get real path of specyfed command
 comm=$(realpath "/bin/$1");
 
-# Get the layer
-layer="/usr/bin/add-comm.dep";
+# Set the layer
+layer='#!/bin/bash';
 
 
 # If command does not exist, then create with the layer
 if sudo [ ! -f "$comm" ]; then 
-	sudo sh -c "cat "$layer" > "$comm"";
+	printf '$layer\n' |sudo tee "$comm";
 fi;
 
 
@@ -26,7 +26,7 @@ fi;
 sudo ${VISUAL-${EDITOR-vim}} "$comm";
 
 # If the command is still equal the layer, delete it with root privilegies
-if { diff -q "$comm" "$layer" > /dev/null; }; then 
+if [ "$(head -c 13 "$comm"|tr '\n' ' ')" == "$layer  " ]; then 
 	sudo rm "$comm";
 
 else
