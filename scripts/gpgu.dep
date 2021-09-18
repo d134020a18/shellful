@@ -1,6 +1,5 @@
 #!/bin/bash
 #noman
-set -x
 	gpg -e $1 "$2"&
 	pid=$!
 	[ -f /bin/progress ] &&
@@ -9,7 +8,7 @@ set -x
 	error=$?
 	if [ $error == 0 ]; then
 #		rm\
-		pdel\
+		shred -f -n 10 -uvz\
 			"$2" || Failed deleting original file
 		
 	else
