@@ -1,0 +1,40 @@
+#define MAX_ARGS 256
+#define MAX_FILE_LEN 4096
+
+int main(int argc, char *argv[])
+{
+   if( argc > 1 )
+   {
+      FILE *f = fopen(argv[1], "r");
+      if( f != 0 )
+      {
+         char fargs[MAX_FILE_LEN] = "" ;
+         fread( fargs, 1, MAX_FILE_LEN, f ) ;
+
+         // Build fargv from file content
+         char* fargv[MAX_ARGS] ;
+         int fargc = 0 ;
+
+         fargv[fargc] = strtok( fargs, " \n\r" ) ;
+
+         while( fargc < MAX_ARGS && fargv[fargc] != 0 )
+         {
+            fargc++ ;
+            fargv[fargc] = strtok( 0, "\n\r" ) ;
+         }
+
+         // Process fargv using getopt()
+         while( (char c = getopt( fargc, fargv, "a:b:c:")) != -1 )
+         {
+            switch( c )
+            {
+               ...
+            }
+         }
+      }
+   }
+
+   ...
+
+   return 0 ;
+}
