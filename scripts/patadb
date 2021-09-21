@@ -1,0 +1,33 @@
+# Unlock android pattern from adb
+# Tested only in Huawei Mediapad T5
+# Syntax: patadb PIXEL_COLUMNS PIXEL_ROWS PATTERN
+# The PATTERN should be set based on the following layout:
+
+# 1 2 3
+# 4 5 6
+# 7 8 9
+
+# Usage ex: patadb 1200x1920 1 4 7 8 9
+adb shell sendevent /dev/input/event3 3 57 14
+adb shell sendevent /dev/input/event3 1 330 1
+
+for cor in $(seq 3 $#); do
+
+	row=$(((${!cor}+2)/3))
+	col=$((((${!cor}+2)%3)+1))
+
+	x=$(($1/4*$col))
+	y=$(($2/6*($row+2))) 
+
+	adb shell sendevent /dev/input/event3 3 53 $x
+	adb shell sendevent /dev/input/event3 3 54 $y
+	adb shell sendevent /dev/input/event3 3 58 57
+	adb shell sendevent /dev/input/event3 0 0 0
+
+done
+
+adb shell sendevent /dev/input/event3 3 57 4294967295
+adb shell sendevent /dev/input/event3 1 330 0
+adb shell sendevent /dev/input/event3 0 0 0
+
+
