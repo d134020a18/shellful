@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Script for tagging songs(or whatever file actually) , placing a symlink in "tags/TAG" dir
+
+# Get all "-t TAG" parameters and remove from args array
+for n in $(seq 1 $#); do
+	m=$(($n+1))
+	[ "$1" == "-t" ] && { tags+=("$2");shift 2;}
+done
+
+# If no "-t" parameters then use first argument as tag
+[ -z $tags ] && { tags="$1";shift;}
+
+# For each tag, create a dir at "tags" dir and add songs symlinks to it
+for tag in ${tags[@]}; do
+	mkdir -p "tags/$tag";
+	[ -d "tags/$tag" ] && ln -r -s "$@" "./tags/$tag"
+done
+
+# Syntax: "./tag TAG SONG [SONG2..]"
+# Syntax: "./tag -t TAG [-t TAG2..] SONG [SONG2..]"
