@@ -1,4 +1,11 @@
 #!/bin/bash
 mkdir -p "~/screenshots"
-cd "~/screenshots"
-maim "$(date +"%d-%m-%Y_%R:%S")".jpg
+date=$(date +"%Y-%m-%d_%R:%S");
+[ -f ~/screenshots/${date}.jpg ] &&
+{ 
+  a=_;
+  while [ -f ~/screenshots/${date}_$n.jpg ]; do
+    n=$(($n+1));
+  done; 
+};
+xfce4-screenshooter --save ~/screenshots/$date$a$n.jpg -m -f
