@@ -1,10 +1,14 @@
 #!/bin/bash
 
 # Script for tagging songs(or whatever file actually) , placing a symlink in "tags/TAG" dir
+set -x
+remove=0
+
+# Check if remove is specified
+[ $1 == "-r" ] && { remove=1;shift;}
 
 # Get all "-t TAG" parameters and remove from args array
 for n in $(seq 1 $#); do
-	m=$(($n+1))
 	[ "$1" == "-t" ] && { tags+=("$2");shift 2;}
 done
 
@@ -13,8 +17,27 @@ done
 
 # For each tag, create a dir at "tags" dir and add songs symlinks to it
 for tag in ${tags[@]}; do
-	mkdir -p "tags/$tag";
-	[ -d "tags/$tag" ] && ln -r -s "$@" "./tags/$tag"
+	if [ $remove != 1 ]; then
+		mkdir -p "tags/$tag";
+		[ -d "tags/$tag" ] && ln -r -s "$@" "./tags/$tag"
+	else
+		for song in "$@"; do
+			unlink "./tags/$tag/$song"
+		done
+	fi
+		 # And a file db
+		 for song in "$@"; do
+			 t="./tags/$tag/.db.txt"
+			 
+			 if [ $remove != 1 ]; then
+				 tee -a "$t" <<< "$song"
+			 else
+				 sed -i "/^$song\$/d" "$t"
+			 fi
+			 sort "$t"|uniq>"${t}.tmp"
+			 mv "${t}.tmp" "$t"
+		 done
+
 done
 
 # Syntax: "./tag TAG SONG [SONG2..]"
